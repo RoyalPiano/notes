@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/add_btn_shape.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/add_icon.xml" value="0.196" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/app_icon.xml" value="0.221" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/back_icon.xml" value="0.221" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/btn_clickable_bg.xml" value="0.221" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/circle_shape.xml" value="0.221" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/delete_menu_shape.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/delete_note_icon.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/edit_text_shape.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/no_btn.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/note_shape.xml" value="0.221" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/save_icon.xml" value="0.221" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/selector.xml" value="0.2395" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/drawable/yes_btn.xml" value="0.2335" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/activity_details_note.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/dialog_delete.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/edit_text_shape.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_create_note.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_edit_note.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_home.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_note_details.xml" value="0.22" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_test.xml" value="0.27395833333333336" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/note_item.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/toolbar.xml" value="0.234375" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/menu/delete_menu.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

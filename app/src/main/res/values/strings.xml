@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">notes</string>
+    <string name="create_note_button">Create note button</string>
+    <string name="save_note_button">Save note button</string>
+    <string name="titleHint">Title…</string>
+    <string name="notesHint">Your text…</string>
+    <string name="yesDialog">Yes</string>
+    <string name="noDialog">No</string>
+    <string name="delete">Delete</string>
+    <string name="client_id" translatable="false">987447378593-kr8vb2op3ucr2u020cbs5m6316he3143.apps.googleusercontent.com</string>
+    <string name="delete_btn">delete_btn</string>
+    <string name="confirm_dialog">Are you sure you want to delete this?</string>
+</resources>

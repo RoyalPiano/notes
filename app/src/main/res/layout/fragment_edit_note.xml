@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:transitionName="note_item_big"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".EditNoteFragment"
+    android:background="@color/background_color">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+            <EditText
+                android:textColor="@color/empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/noteTitleInput"
+                android:layout_marginTop="10dp"
+                android:inputType="textCapSentences"
+                android:hint="@string/titleHint"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textSize="22sp"
+                android:textColorHint="@color/gray"
+                android:background="@color/background_color"
+                android:importantForAutofill="no"/>
+
+            <EditText
+                android:textColor="@color/empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/noteTextInput"
+                android:layout_marginTop="10dp"
+                android:inputType="textMultiLine"
+                android:hint="@string/notesHint"
+                android:background="@color/background_color"
+                android:padding="15dp"
+                android:textSize="19sp"
+                android:textColorHint="@color/gray"
+                android:gravity="start"
+                android:importantForAutofill="no"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveNoteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/background_color"
+        android:backgroundTintMode="src_in"
+        android:contentDescription="@string/save_note_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/save_icon"
+        app:tint="@color/teal_200" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
