@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="ru.example.notes.NotesListFragment"
-        android:label="Home"
+        android:label="Notes"
         tools:layout="@layout/fragment_notes_list" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_edit_note"
@@ -23,7 +23,7 @@
 
         android:id="@+id/navigation_edit_note"
         android:name="ru.example.notes.EditNoteFragment"
-        android:label="Edit"
+        android:label="Note"
         tools:layout="@layout/fragment_edit_note" >
         <action
             android:id="@+id/action_navigation_edit_note_to_navigation_home"

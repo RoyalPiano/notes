@@ -3,7 +3,6 @@ package ru.example.notes
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -24,23 +23,27 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
     private val binding get() = _binding!!
     private var isCreateView = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
-        val callback = object: OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_navigation_edit_note_to_navigation_home)
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
 
         isCreateView = arguments?.get("noteTitle") == null
         if(!isCreateView) {
@@ -66,8 +69,7 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
                 notesListViewModel.update(note)
             }
 
-            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-            Navigation.findNavController(it).navigate(R.id.action_navigation_edit_note_to_navigation_home)
+            findNavController().navigateUp()
         }
 
         return binding.root
@@ -82,8 +84,12 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_menu) {
+            changeMenuVisibility(false)
             val bottomSheet = BottomSheetDialog(requireContext(), R.style.BottomSheetStyle)
             bottomSheet.setContentView(R.layout.dialog_delete)
+            bottomSheet.setOnCancelListener {
+                changeMenuVisibility(true)
+            }
             bottomSheet.show()
             val textViewYes = bottomSheet.findViewById<TextView>(R.id.dialog_yes)
             val textViewNo = bottomSheet.findViewById<TextView>(R.id.dialog_no)
@@ -91,25 +97,25 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
             textViewYes?.setOnClickListener {
                 notesListViewModel.delete(arguments?.getInt("noteId")!!)
                 bottomSheet.dismiss()
-                Navigation.findNavController(binding.root).navigate(R.id.action_navigation_edit_note_to_navigation_home)
-                toggleMenuVisibility()
+                findNavController().navigateUp()
             }
 
             textViewNo?.setOnClickListener {
+                changeMenuVisibility(true)
                 bottomSheet.dismiss()
             }
         }
 
         if(item.itemId == android.R.id.home) {
             Navigation.findNavController(binding.root).navigate(R.id.action_navigation_edit_note_to_navigation_home)
-            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun toggleMenuVisibility() {
-        mainMenu?.findItem(R.id.delete_menu)?.isVisible = false
+
+    private fun changeMenuVisibility(flag: Boolean) {
+        mainMenu?.findItem(R.id.delete_menu)?.isVisible = flag
     }
 
     override fun onDestroyView() {

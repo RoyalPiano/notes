@@ -1,13 +1,14 @@
 package ru.example.notes
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import ru.example.notes.adapters.NoteAdapter
@@ -23,6 +24,42 @@ class NotesListFragment: Fragment() {
     private val binding get() = _binding!!
     val noteAdapter = NoteAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,16 +67,6 @@ class NotesListFragment: Fragment() {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
-        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
-        val callback = object: OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().finish()
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
-        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         noteAdapter.setOnNoteClickListener(object :
         NoteAdapter.OnNoteClickListener {
             override fun onNoteClick(note: Note?, itemView: View) {
@@ -59,8 +86,8 @@ class NotesListFragment: Fragment() {
                         bundle.putInt("noteId", note.id)
                         bundle.putString("noteTitle", note.title)
                         bundle.putString("noteText", note.noteText)
-                        Navigation.findNavController(binding.root)
-                            .navigate(R.id.action_navigation_home_to_navigation_edit_note, bundle)
+                        val navController = findNavController()
+                        navController.navigate(R.id.action_navigation_home_to_navigation_edit_note, bundle)
                     }
                 }
             }
@@ -81,6 +108,7 @@ class NotesListFragment: Fragment() {
         binding.notesList.adapter = noteAdapter
 
         binding.addNoteBtn.setOnClickListener {
+            noteAdapter.clearSelectedNotes()
             Navigation.findNavController(it).navigate(R.id.action_navigation_home_to_navigation_edit_note)
         }
 
@@ -125,20 +153,24 @@ class NotesListFragment: Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_menu) {
+            setDeleteMenuVisibility(false)
             val bottomSheet = BottomSheetDialog(requireContext(), R.style.BottomSheetStyle)
             bottomSheet.setContentView(R.layout.dialog_delete)
+            bottomSheet.setOnCancelListener {
+                setDeleteMenuVisibility(true)
+            }
             bottomSheet.show()
             val textViewYes = bottomSheet.findViewById<TextView>(R.id.dialog_yes)
             val textViewNo = bottomSheet.findViewById<TextView>(R.id.dialog_no)
 
             textViewYes?.setOnClickListener {
                 deleteSelectedNotes()
-                setDeleteMenuVisibility(false)
                 bottomSheet.dismiss()
             }
 
             textViewNo?.setOnClickListener {
                 bottomSheet.dismiss()
+                setDeleteMenuVisibility(true)
             }
         }
         return super.onOptionsItemSelected(item)

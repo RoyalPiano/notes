@@ -17,12 +17,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/background_color</item>
         <item name="android:navigationBarColor">@color/background_color</item>
         <!-- Customize your theme here. -->
-        <item name="android:homeAsUpIndicator">@drawable/back_icon</item>
+        <item name="homeAsUpIndicator">@drawable/back_icon</item>
     </style>
     
     <style name="BottomSheetStyle"
         parent="Theme.Material3.Dark.BottomSheetDialog">
         <item name="bottomSheetStyle">@drawable/delete_menu_shape</item>
+    </style>
+
+    <style name="ToolBar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/empty</item>
     </style>
 
 </resources>

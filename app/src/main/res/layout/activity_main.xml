@@ -7,7 +7,11 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
+        android:theme="@style/ToolBar"
+        app:navigationIcon="@drawable/back_icon"
+        app:navigationIconTint="@color/white"
+        app:title="Notes"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -17,9 +21,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/homeFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -30,18 +34,5 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginBottom="30dp"-->
-<!--        android:id="@+id/add_note_btn"-->
-<!--        app:backgroundTint="#0BD8C7"-->
-<!--        app:tint="#3C3C3C"-->
-<!--        app:srcCompat="@drawable/add_icon"-->
-<!--        android:contentDescription="@string/create_note_button" />-->
 
 </LinearLayout>
