@@ -22,7 +22,7 @@ class NotesListFragment: Fragment() {
     private val notesListViewModel: NotesListViewModel by viewModels()
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
-    val noteAdapter = NoteAdapter()
+    private val noteAdapter = NoteAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +67,13 @@ class NotesListFragment: Fragment() {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
+
         noteAdapter.setOnNoteClickListener(object :
         NoteAdapter.OnNoteClickListener {
             override fun onNoteClick(note: Note?, itemView: View) {
                 if(note != null)
                 {
-                    if(noteAdapter.isSelectedAny)
+                    if(notesListViewModel.isSelectedAny)
                     {
                         if(note.selected) {
                             deselectItem(note, itemView)
@@ -93,7 +94,7 @@ class NotesListFragment: Fragment() {
             }
 
             override fun onNoteLongClick(note: Note, itemView: View) {
-                if(!noteAdapter.isSelectedAny) {
+                if(!notesListViewModel.isSelectedAny) {
                     setDeleteMenuVisibility(true)
                     markFirstSelectedItem(note, itemView)
                 }
@@ -101,14 +102,21 @@ class NotesListFragment: Fragment() {
         })
 
         notesListViewModel.allNotes.observe(viewLifecycleOwner) { notes ->
+            if(!notesListViewModel.isSelectedAny && notesListViewModel.selectedNotes.isNotEmpty()) {
+                for (note in notes) {
+                    if(notesListViewModel.selectedNotes.contains(note.id))
+                        note.selected = false
+                }
+                notesListViewModel.selectedNotes.clear() // костыльно
+            }
             noteAdapter.setNotes(notes)
         }
 
-        binding.notesList.layoutManager = StaggeredGridLayoutManager(2, 1) //GridLayoutManager(requireContext(), 2)
+        binding.notesList.layoutManager = StaggeredGridLayoutManager(2, 1)
         binding.notesList.adapter = noteAdapter
 
         binding.addNoteBtn.setOnClickListener {
-            noteAdapter.clearSelectedNotes()
+            notesListViewModel.isSelectedAny = false
             Navigation.findNavController(it).navigate(R.id.action_navigation_home_to_navigation_edit_note)
         }
 
@@ -117,8 +125,8 @@ class NotesListFragment: Fragment() {
 
     fun markFirstSelectedItem(note: Note, itemView: View): Boolean {
         markItem(itemView)
-        noteAdapter.selectedNotes.add(note.id)
-        noteAdapter.isSelectedAny = true
+        notesListViewModel.selectedNotes.add(note.id)
+        notesListViewModel.isSelectedAny = true
         note.selected = true
 
         return true
@@ -127,9 +135,9 @@ class NotesListFragment: Fragment() {
     private fun deselectItem(note: Note, itemView: View): Boolean {
         unMarkItem(itemView)
         note.selected = false
-        noteAdapter.selectedNotes.remove(note.id)
-        if(noteAdapter.selectedNotes.isEmpty()) {
-            noteAdapter.isSelectedAny = false
+        notesListViewModel.selectedNotes.remove(note.id)
+        if(notesListViewModel.selectedNotes.isEmpty()) {
+            notesListViewModel.isSelectedAny = false
             setDeleteMenuVisibility(false)
         }
         return true
@@ -147,7 +155,7 @@ class NotesListFragment: Fragment() {
     private fun selectItem(note: Note, itemView: View): Boolean {
         markItem(itemView)
         note.selected = true
-        noteAdapter.selectedNotes.add(note.id)
+        notesListViewModel.selectedNotes.add(note.id)
         return true
     }
 
@@ -164,7 +172,7 @@ class NotesListFragment: Fragment() {
             val textViewNo = bottomSheet.findViewById<TextView>(R.id.dialog_no)
 
             textViewYes?.setOnClickListener {
-                deleteSelectedNotes()
+                notesListViewModel.deleteSelectedNotes()
                 bottomSheet.dismiss()
             }
 
@@ -176,17 +184,12 @@ class NotesListFragment: Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteSelectedNotes() {
-        for(id in noteAdapter.selectedNotes) {
-            notesListViewModel.delete(id)
-        }
-        noteAdapter.clearSelectedNotes()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
         mainMenu = menu
         super.onCreateOptionsMenu(menu, inflater)
+        if (notesListViewModel.isSelectedAny)
+            setDeleteMenuVisibility(true)
     }
 
     fun setDeleteMenuVisibility(isVisible: Boolean) {

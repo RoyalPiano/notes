@@ -17,10 +17,6 @@ class NotesRepo(context: Context, scope: CoroutineScope) {
         allNotes = notesDao.getAllNotes()
     }
 
-//    fun getAllNotes(): LiveData<List<Note>> {
-//        return notesDao.getAllNotes()
-//    }
-
     fun insert(note: Note) {
         notesDao.insert(note)
     }
@@ -31,9 +27,5 @@ class NotesRepo(context: Context, scope: CoroutineScope) {
 
     fun delete(id: Int) {
         notesDao.delete(id)
-    }
-
-    fun findNoteById(id: Int): Note {
-        return notesDao.getNote(id)
     }
 }

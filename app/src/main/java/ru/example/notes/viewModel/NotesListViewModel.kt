@@ -11,6 +11,20 @@ import ru.example.notes.repository.NotesRepo
 class NotesListViewModel(application: Application): AndroidViewModel(application) {
     private val repo = NotesRepo(application.applicationContext, viewModelScope)
     val allNotes = repo.allNotes
+    var isSelectedAny = false
+    val selectedNotes = mutableListOf<Int>()
+
+    private fun clearSelected() {
+        isSelectedAny = false
+        selectedNotes.clear()
+    }
+
+    fun deleteSelectedNotes() {
+        for (id in selectedNotes) {
+            delete(id)
+        }
+        clearSelected()
+    }
 
     fun insert(note: Note) = viewModelScope.launch(Dispatchers.IO) {
         repo.insert(note)
@@ -22,9 +36,5 @@ class NotesListViewModel(application: Application): AndroidViewModel(application
 
     fun update(note: Note) = viewModelScope.launch(Dispatchers.IO) {
         repo.update(note)
-    }
-
-    fun findNoteById(id: Int): Note {
-        return repo.findNoteById(id)
     }
 }

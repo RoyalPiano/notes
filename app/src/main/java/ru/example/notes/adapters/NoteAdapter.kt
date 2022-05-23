@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.note_item.view.*
 import ru.example.notes.R
 import ru.example.notes.model.Note
+import ru.example.notes.viewModel.NotesListViewModel
 import kotlin.collections.ArrayList
 
 class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
-
     private val notes: ArrayList<Note> = ArrayList()
     private var listener: OnNoteClickListener? = null
-    var isSelectedAny: Boolean = false
-    val isSelectedAll: Boolean = false
-    val selectedNotes = mutableListOf<Int>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val noteView: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.note_item, parent, false)
@@ -67,18 +66,16 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             title.text = note.title
             noteText.text = note.noteText
             noteDate.text = note.date
-            itemView.setBackgroundResource(R.drawable.note_shape)
+            if(!note.selected) {
+                itemView.setBackgroundResource(R.drawable.note_shape)
+            }
+            else
+                itemView.setBackgroundResource(R.drawable.selector)
         }
     }
 
-
     fun setOnNoteClickListener(listener: OnNoteClickListener) {
         this.listener = listener
-    }
-
-    fun clearSelectedNotes() {
-        isSelectedAny = false
-        selectedNotes.clear()
     }
 
     @SuppressLint("NotifyDataSetChanged")
