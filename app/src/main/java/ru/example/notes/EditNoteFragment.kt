@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -17,7 +18,7 @@ import java.time.format.DateTimeFormatter
 
 class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
 
-    private val notesListViewModel: NotesListViewModel by viewModels()
+    private val notesListViewModel: NotesListViewModel by activityViewModels()
     private var _binding: FragmentEditNoteBinding? = null
     private var mainMenu: Menu? = null
     private val binding get() = _binding!!
@@ -44,31 +45,32 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
-
-        isCreateView = arguments?.get("noteTitle") == null
+        val noteToEdit = notesListViewModel.noteToEdit
+        isCreateView = noteToEdit == null
         if(!isCreateView) {
-            binding.noteTitleInput.setText(arguments?.get("noteTitle").toString())
-            binding.noteTextInput.setText(arguments?.get("noteText").toString())
+            binding.noteTitleInput.setText(noteToEdit!!.title).toString()
+            binding.noteTextInput.setText(noteToEdit.noteText).toString()
         }
 
         binding.saveNoteBtn.setOnClickListener {
             val currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             if(isCreateView) {
-                val note = Note(binding.noteTitleInput.text.toString(),
+                val note = Note(
+                    binding.noteTitleInput.text.toString(),
                     binding.noteTextInput.text.toString(),
                     currentDate
                 )
                 notesListViewModel.insert(note)
             }
             else {
-                val note = Note(binding.noteTitleInput.text.toString(),
+                val note = Note(
+                    binding.noteTitleInput.text.toString(),
                     binding.noteTextInput.text.toString(),
                     currentDate,
-                    arguments?.getInt("noteId")!!
+                    noteToEdit!!.id
                 )
                 notesListViewModel.update(note)
             }
-
             findNavController().navigateUp()
         }
 
@@ -95,7 +97,7 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
             val textViewNo = bottomSheet.findViewById<TextView>(R.id.dialog_no)
 
             textViewYes?.setOnClickListener {
-                notesListViewModel.delete(arguments?.getInt("noteId")!!)
+                notesListViewModel.delete(notesListViewModel.noteToEdit!!.id)
                 bottomSheet.dismiss()
                 findNavController().navigateUp()
             }
@@ -113,6 +115,9 @@ class EditNoteFragment: Fragment(R.layout.fragment_edit_note) {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun clearNoteToEdit() {
+        notesListViewModel.noteToEdit = null
+    }
 
     private fun changeMenuVisibility(flag: Boolean) {
         mainMenu?.findItem(R.id.delete_menu)?.isVisible = flag

@@ -28,4 +28,8 @@ class NotesRepo(context: Context, scope: CoroutineScope) {
     fun delete(id: Int) {
         notesDao.delete(id)
     }
+
+    fun getNote(id: Int) : Note {
+        return notesDao.getNote(id)
+    }
 }

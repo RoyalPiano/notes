@@ -1,14 +1,14 @@
 package ru.example.notes
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import ru.example.notes.adapters.NoteAdapter
@@ -16,48 +16,17 @@ import ru.example.notes.databinding.FragmentNotesListBinding
 import ru.example.notes.model.Note
 import ru.example.notes.viewModel.NotesListViewModel
 
+
 class NotesListFragment: Fragment() {
 
     private var mainMenu: Menu? = null
-    private val notesListViewModel: NotesListViewModel by viewModels()
+    private val notesListViewModel: NotesListViewModel by activityViewModels()
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
     private val noteAdapter = NoteAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onCreateView(
@@ -67,6 +36,7 @@ class NotesListFragment: Fragment() {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentNotesListBinding.inflate(inflater, container, false)
+        notesListViewModel.noteToEdit = null
 
         noteAdapter.setOnNoteClickListener(object :
         NoteAdapter.OnNoteClickListener {
@@ -83,12 +53,10 @@ class NotesListFragment: Fragment() {
                         }
                     }
                     else {
-                        val bundle = Bundle()
-                        bundle.putInt("noteId", note.id)
-                        bundle.putString("noteTitle", note.title)
-                        bundle.putString("noteText", note.noteText)
+                        notesListViewModel.noteToEdit = note
                         val navController = findNavController()
-                        navController.navigate(R.id.action_navigation_home_to_navigation_edit_note, bundle)
+                        notesListViewModel.clearSelectedNotes()
+                        navController.navigate(R.id.action_navigation_home_to_navigation_edit_note)
                     }
                 }
             }
@@ -102,13 +70,6 @@ class NotesListFragment: Fragment() {
         })
 
         notesListViewModel.allNotes.observe(viewLifecycleOwner) { notes ->
-            if(!notesListViewModel.isSelectedAny && notesListViewModel.selectedNotes.isNotEmpty()) {
-                for (note in notes) {
-                    if(notesListViewModel.selectedNotes.contains(note.id))
-                        note.selected = false
-                }
-                notesListViewModel.selectedNotes.clear() // костыльно
-            }
             noteAdapter.setNotes(notes)
         }
 
@@ -116,14 +77,14 @@ class NotesListFragment: Fragment() {
         binding.notesList.adapter = noteAdapter
 
         binding.addNoteBtn.setOnClickListener {
-            notesListViewModel.isSelectedAny = false
+            notesListViewModel.clearSelectedNotes()
             Navigation.findNavController(it).navigate(R.id.action_navigation_home_to_navigation_edit_note)
         }
 
         return binding.root
     }
 
-    fun markFirstSelectedItem(note: Note, itemView: View): Boolean {
+    private fun markFirstSelectedItem(note: Note, itemView: View): Boolean {
         markItem(itemView)
         notesListViewModel.selectedNotes.add(note.id)
         notesListViewModel.isSelectedAny = true
@@ -192,7 +153,7 @@ class NotesListFragment: Fragment() {
             setDeleteMenuVisibility(true)
     }
 
-    fun setDeleteMenuVisibility(isVisible: Boolean) {
+    private fun setDeleteMenuVisibility(isVisible: Boolean) {
         mainMenu?.findItem(R.id.delete_menu)?.isVisible = isVisible
     }
 }

@@ -15,6 +15,9 @@ interface NotesDao {
     @Query("DELETE FROM note_table WHERE id=:id")
     fun delete(id: Int)
 
+    @Query("SELECT * FROM note_table WHERE id=:id")
+    fun getNote(id: Int) : Note
+
     @Query("DELETE FROM note_table")
     fun deleteAllNotes()
 

@@ -1,17 +1,17 @@
 package ru.example.notes.adapters
 
 import android.annotation.SuppressLint
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.note_item.view.*
 import ru.example.notes.R
 import ru.example.notes.model.Note
-import ru.example.notes.viewModel.NotesListViewModel
-import kotlin.collections.ArrayList
+
 
 class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     private val notes: ArrayList<Note> = ArrayList()
@@ -31,9 +31,11 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     override fun getItemCount(): Int = notes.size
 
     fun setNotes(notes: List<Note>) {
+        val diffUtil = NotesDiffUtil(this.notes, notes)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.notes.clear()
         this.notes.addAll(notes)
-        notifyDataChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     private fun getNoteAt(position: Int): Note {
@@ -66,11 +68,10 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
             title.text = note.title
             noteText.text = note.noteText
             noteDate.text = note.date
-            if(!note.selected) {
-                itemView.setBackgroundResource(R.drawable.note_shape)
+            when(note.selected) {
+                true -> itemView.setBackgroundResource(R.drawable.selector)
+                false -> itemView.setBackgroundResource(R.drawable.note_shape)
             }
-            else
-                itemView.setBackgroundResource(R.drawable.selector)
         }
     }
 
