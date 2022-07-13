@@ -27,12 +27,13 @@
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_edit_note.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_home.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_note_details.xml" value="0.22" />
-        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_notes_list.xml" value="0.33" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/fragment_test.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/note_item.xml" value="0.25" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/layout/toolbar.xml" value="0.234375" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/menu/delete_menu.xml" value="0.25" />
+        <entry key="..\:/Users/Oleg/AndroidStudioProjects/notes/app/src/main/res/menu/toolbar_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

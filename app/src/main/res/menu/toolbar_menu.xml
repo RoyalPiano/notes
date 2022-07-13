@@ -6,7 +6,6 @@
         android:icon="@drawable/delete_note_icon"
         android:id="@+id/delete_menu"
         app:showAsAction="always"
-        android:iconTint="@color/white"
         android:visible="false"/>
 
 </menu>
